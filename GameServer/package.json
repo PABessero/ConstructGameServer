@@ -1,0 +1,9 @@
+{
+  "name": "game_server",
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/ws": "^8.5.3",
+    "colors": "^1.4.0",
+    "ws": "^8.11.0"
+  }
+}

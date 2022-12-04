@@ -1,0 +1,7 @@
+{
+  "name": "construct_ws",
+  "version": "1.0.0",
+  "dependencies": {
+    "prettier": "^2.8.0"
+  }
+}

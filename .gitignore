@@ -1,0 +1,6 @@
+/package-lock.json
+/SignallingServer/node_modules/
+/GameServer/node_modules/
+/GameServer/package-lock.json
+/SignallingServer/package-lock.json
+/node_modules/

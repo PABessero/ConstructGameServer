@@ -1,0 +1,11 @@
+{
+  "author": "Scirra Ltd",
+  "name": "scirra-sigserv",
+  "description": "Multiplayer signalling server",
+  "version": "1.5.0",
+  "type": "module",
+  "dependencies": {
+    "ws": "",
+    "colors": ""
+  }
+}
