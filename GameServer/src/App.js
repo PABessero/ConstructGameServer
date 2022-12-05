@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = require("ws");
 require("colors");
 const url = require("url");
+const DataBase_1 = require("./modules/DataBase");
 const wss = new ws_1.WebSocketServer({ port: 5656 });
 console.log("Creating server".green);
+DataBase_1.DataBase.initDB();
 let clients = [];
 wss.on("connection", on_connection);
 function getUniqueId() {
@@ -57,7 +59,6 @@ function on_connection(ws, req) {
         clients.find((client) => {
             return client.player.id === player.id;
         }).player = player;
-        // console.log(JSON.stringify(player).blue);
     });
     ws.on("close", function disconnected() {
         console.log(`Client ${player.id} disconnected`);

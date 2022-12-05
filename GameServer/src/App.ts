@@ -4,9 +4,11 @@ import * as url from "url";
 import { Player } from "./interfaces/Player";
 import { SocketClient } from "./interfaces/SocketClient";
 import { SocketRequest } from "./interfaces/SocketRequest";
+import {DataBase} from "./modules/DataBase";
 
 const wss = new WebSocketServer({ port: 5656 });
 console.log("Creating server".green);
+DataBase.initDB()
 
 let clients: SocketClient[] = [];
 
@@ -67,7 +69,6 @@ function on_connection(ws: WebSocket, req) {
     clients.find((client) => {
       return client.player.id === player.id;
     }).player = player;
-    // console.log(JSON.stringify(player).blue);
   });
 
   ws.on("close", function disconnected() {
