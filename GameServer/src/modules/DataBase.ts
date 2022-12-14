@@ -1,6 +1,9 @@
+import { Player } from "../interfaces/Player";
+import { Database, sqlite3 } from "sqlite3";
+
 export module DataBase {
-  const sqlite3 = require("sqlite3").verbose();
-  const db = new sqlite3.Database("db.sqlite3", (err) => {
+  const sqlite3: sqlite3 = require("sqlite3").verbose();
+  const db: Database = new sqlite3.Database("db.sqlite3", (err) => {
     if (err) {
       return console.log(err.message.red);
     } else {
@@ -45,16 +48,63 @@ export module DataBase {
   }
 
   export function getUser(username) {
-    db.serialize(() => {
-      db.all(
-        `SELECT * FROM user WHERE username = '${username}'`,
-        (err, rows) => {
-          if (err) {
-            console.log(err.message.red);
-          } else {
+    return new Promise((resolve, reject) => {
+      let res: Player;
+      db.serialize(() => {
+        db.all(
+          `SELECT * FROM user WHERE username = '${username}'`,
+          (err, rows) => {
+            console.log("Querying DB");
+            if (err) {
+              console.log(err.message.red);
+              reject(err.message);
+            } else if (rows.length > 0) {
+              resolve({
+                name: rows[0].username,
+                x: rows[0].posX,
+                y: rows[0].posY,
+                z: rows[0].posZ,
+                rotation: rows[0].rotation,
+              });
+            } else {
+              console.log("No user found in DB");
+              reject("No user found");
+            }
           }
+        );
+      });
+      return res;
+    });
+  }
+
+  export function updateUser(user: Player) {
+    db.serialize(() => {
+      const sql = `UPDATE user SET currentID='${user.id}', posX=${user.x}, posY=${user.y}, rotation=${user.rotation} WHERE username = '${user.name}'`;
+      db.run(sql, (err) => {
+        if (err) {
+          console.log(err.message.red);
+        } else {
         }
-      );
+      });
+    });
+  }
+
+  export function createUser(user: Player) {
+    db.serialize(() => {
+      const sql = `INSERT INTO user (username, currentID, posX, posY, posZ, rotation) VALUES ('${user.name}', '${user.id}', ${user.x}, ${user.y}, ${user.z}, ${user.rotation})`;
+      db.run(sql, (err) => {
+        if (err) {
+          console.log(err.message.red);
+        } else {
+          console.log("Created Player".green);
+        }
+      });
+    });
+  }
+
+  export function setUserOnline(user: Player) {
+    db.serialize(() => {
+      const sql = `UPDATE user SET`;
     });
   }
 }

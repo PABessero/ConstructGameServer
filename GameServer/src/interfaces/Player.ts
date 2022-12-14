@@ -1,5 +1,5 @@
 export interface Player {
-  id: string | string[];
+  id?: string | string[];
   name?: string | string[];
   rotation?: number;
   x?: number;
