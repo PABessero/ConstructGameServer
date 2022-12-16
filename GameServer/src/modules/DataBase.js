@@ -44,6 +44,38 @@ var DataBase;
                 else
                     console.log("Created table USER".green);
             });
+            db.run(`create table main.rarity (
+                id integer not null 
+                    constraint rarity_pk
+                        primary key autoincrement ,
+                slug text default id,
+                display_name text default slug
+                
+           )`, (err) => {
+                if (err) {
+                    console.log(err.message.red);
+                }
+                else
+                    console.log("Created table RARITY".green);
+            });
+            db.run(`create table main.item
+            (
+                id integer not null
+                    constraint item_pk
+                        primary key autoincrement,
+                slug text default id,
+                display_name text default slug,
+                rarity integer 
+                    constraint item_rarity
+                        references rarity (id)
+            )`, (err) => {
+                if (err) {
+                    console.log(err.message.red);
+                }
+                else {
+                    console.log("Created table ITEM".green);
+                }
+            });
         });
     }
     DataBase.initDB = initDB;
